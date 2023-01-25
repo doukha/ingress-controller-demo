@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: flare-sayhello-app
+  namespace: flare-demo
+  labels:
+    app: flare-sayhello
+spec:
+  containers:
+    - name: flare-sayhello-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=flare-sayhello"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: flare-sayhello-service
+  namespace: flare-demo
+spec:
+  selector:
+    app: flare-sayhello
+  ports:
+    - port: 5678 # Default port for image

@@ -1,0 +1,58 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: karma-ingress
+  namespace: karma-preprod
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/karma/sayhello"
+            backend:
+              service:
+                name: karma-sayhello-service
+                port:
+                  number: 5678
+          - pathType: Prefix
+            path: "/karma/update-graph"
+            backend:
+              service:
+                name: karma-update-graph-service
+                port:
+                  number: 5678
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flare-ingress
+  namespace: flare-demo
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/flare/sayhello"
+            backend:
+              service:
+                name: flare-sayhello-service
+                port:
+                  number: 5678
+          - pathType: Prefix
+            path: "/flare/documents"
+            backend:
+              service:
+                name: flare-documents-service
+                port:
+                  number: 5678

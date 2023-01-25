@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  namespace: karma-preprod
+  name: karma-sayhello-app
+  labels:
+    app: karma-sayhello
+spec:
+  containers:
+    - name: karma-sayhello-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=karma-sayhello"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: karma-sayhello-service
+  namespace: karma-preprod
+spec:
+  selector:
+    app: karma-sayhello
+  ports:
+    - port: 5678 # Default port for image

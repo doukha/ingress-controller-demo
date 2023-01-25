@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  namespace: karma-preprod
+  name: karma-update-graph-app
+  labels:
+    app: karma-update-graph
+spec:
+  containers:
+    - name: karma-update-graph-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=karma-update-graph"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: karma-update-graph-service
+  namespace: karma-preprod
+spec:
+  selector:
+    app: karma-update-graph
+  ports:
+    - port: 5678 # Default port for image

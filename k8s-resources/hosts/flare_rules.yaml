@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flare-ingress
+  namespace: flare-demo
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: demo.flare-mgp.com
+      http:
+        paths:
+        - pathType: Prefix
+          path: "/sayhello"
+          backend:
+            service:
+              name: flare-sayhello-service
+              port:
+                number: 5678
+        - pathType: Prefix
+          path: "/documents"
+          backend:
+            service:
+              name: flare-documents-service
+              port:
+                number: 5678

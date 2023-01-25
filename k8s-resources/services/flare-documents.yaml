@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  namespace: flare-demo
+  name: flare-documents-app
+  labels:
+    app: flare-documents
+spec:
+  containers:
+    - name: flare-documents-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=flare-documents"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: flare-demo
+  name: flare-documents-service
+spec:
+  selector:
+    app: flare-documents
+  ports:
+    - port: 5678 # Default port for image
